@@ -1,0 +1,29 @@
+---
+name: Windows (clang-18)
+on:
+  push:
+    paths:
+      - '.github/workflows/windows-clang.yml'
+      - 'CMakeLists.txt'
+      - '**.cmake'
+      - '**.hpp'
+      - '**.cpp'
+jobs:
+  ctest:
+    runs-on: windows-2022
+    strategy:
+      fail-fast: false
+    env:
+      CXXFLAGS: -fuse-ld=lld-link
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build tests
+        run: |
+          # The "Generic" CMake system name is used to skip ABI checks on the compiler that would otherwise cause a failure in the CMake setup phase
+          cmake -B build -G "Unix Makefiles" -DCMAKE_SYSTEM_NAME="Generic" -DCMAKE_CXX_COMPILER="clang++.exe" -DCMAKE_LINKER="lld-link"
+          cmake --build build
+      - name: Run tests
+        run: |
+          cd build
+          ctest --timeout 1 --output-on-failure
