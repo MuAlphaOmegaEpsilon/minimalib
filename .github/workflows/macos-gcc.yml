@@ -1,0 +1,28 @@
+---
+name: MacOS (gcc-14)
+on:
+  push:
+    paths:
+      - '.github/workflows/macos-gcc.yml'
+      - 'CMakeLists.txt'
+      - '**.cmake'
+      - '**.hpp'
+      - '**.cpp'
+jobs:
+  ctest:
+    runs-on: macos-15
+    strategy:
+      fail-fast: false
+    env:
+      TERM: xterm-256color
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build tests
+        run: |
+          cmake -B build -DCMAKE_CXX_COMPILER=g++-14
+          cmake --build build
+      - name: Run tests
+        run: |
+          cd build
+          ctest --timeout 1 --output-on-failure

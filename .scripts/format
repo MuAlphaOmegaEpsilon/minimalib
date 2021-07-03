@@ -1,0 +1,11 @@
+#!/bin/sh
+set -euf
+
+cd $(dirname $0)/..
+
+for FILE in $(find -type f -iname "*.?pp"); do
+	clang-format -i $FILE &
+done
+for FILE in $(find .tests -type f -iname "*.?pp"); do
+	clang-format -i $FILE &
+done

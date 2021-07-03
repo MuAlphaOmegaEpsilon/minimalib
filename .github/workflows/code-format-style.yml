@@ -1,0 +1,19 @@
+---
+name: Code style (clang-format-16)
+on:
+  push:
+    paths:
+      - '.github/workflows/code-format-style.yml'
+      - '.clang-format'
+      - '**.hpp'
+      - '**.cpp'
+
+jobs:
+  format:
+    runs-on: ubuntu-24.04
+    env:
+      TERM: xterm-256color
+    steps:
+      - uses: actions/checkout@v2
+      - name: Validate C++ code format
+        run: clang-format-16 --dry-run -Werror $(find -type f -name "*.?pp")
