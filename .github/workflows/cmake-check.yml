@@ -1,0 +1,22 @@
+---
+name: CMake checks (cmakelang)
+on:
+  push:
+    paths:
+      - '.github/workflows/cmake-check.yml'
+      - '.cmake-format'
+      - '.tests/CMakeLists.txt'
+
+jobs:
+  format:
+    runs-on: ubuntu-24.04
+    env:
+      TERM: xterm-256color
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install cmake-format
+        run: pip install cmakelang --break-system-packages
+      - name: Lint CMake files
+        run: cmake-lint .tests/CMakeLists.txt
+      - name: Validate CMake code format
+        run: cmake-format --check .tests/CMakeLists.txt

@@ -1,0 +1,19 @@
+---
+name: Static analysis (clang-tidy-16)
+on:
+  push:
+    paths:
+      - '.github/workflows/code-static-analysis.yml'
+      - '.clang-tidy'
+      - '**.hpp'
+      - '**.cpp'
+
+jobs:
+  format:
+    runs-on: ubuntu-24.04
+    env:
+      TERM: xterm-256color
+    steps:
+      - uses: actions/checkout@v2
+      - name: Static analyze code
+        run: clang-tidy-16 $(find -type f -name "*.?pp")
