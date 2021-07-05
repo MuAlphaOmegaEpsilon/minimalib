@@ -1,0 +1,33 @@
+name: clang-format
+on:
+  push:
+    paths:
+      - '.github/workflows/clang-format.yml'
+      - '**.hpp'
+      - '**.cpp'
+
+jobs:
+  format:
+    name: format
+    runs-on: ubuntu-latest
+    env:
+      TERM: xterm-256color
+    steps:
+      - uses: actions/checkout@v2
+      - run: sudo apt install clang-format
+      - name: Validate code format
+        run: |
+          clang-format -i $(find -name "*.?pp")
+          if git status --porcelain | grep " M"; then
+            tput setaf 1
+            tput bold
+            echo -e "The following files need to be formatted using clang-format:"
+            tput sgr0
+            echo git status --porcelain | grep " M" | colrm 1 2
+            false
+          else
+            tput setaf 2
+            tput bold
+            echo -e "Congratulations: all files are correctly formatted!"
+            tput sgr0
+          fi
