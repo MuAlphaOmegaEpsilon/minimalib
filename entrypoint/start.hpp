@@ -1,4 +1,6 @@
 #pragma once
+#include "macro/asm.hpp"
+
 extern "C" [[noreturn, gnu::naked, gnu::used]] void _start()
 {
 	asm("xor %rbp,%rbp");				// Clean base pointer, required by ABI
