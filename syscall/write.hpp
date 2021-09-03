@@ -1,11 +1,11 @@
 #pragma once
-#include "macro/asm.hpp"
 #include "fd.hpp"
+#include "macro/asm.hpp"
 #include <stddef.h>
 
 [[gnu::naked]] static int write([[maybe_unused]] fd file_des,
-						 [[maybe_unused]] const char* buffer,
-						 [[maybe_unused]] size_t count) noexcept
+								[[maybe_unused]] const char* buffer,
+								[[maybe_unused]] size_t count) noexcept
 {
 	asm("mov $1,%rax");
 	asm("syscall");
