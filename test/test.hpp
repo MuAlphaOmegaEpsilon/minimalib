@@ -14,8 +14,10 @@ template<size_t COUNT>
 [[nodiscard]] static bool test(bool condition, const char (&description)[COUNT]) noexcept
 {
 	constexpr const char FAIL[] {"\033[31mFAIL\033[0m "};
+	constexpr const char PASS[] {"\033[31mPASS\033[0m "};
 	constexpr size_t BUFFER_SIZE {sizeof(FAIL) + COUNT};
-	char buffer[BUFFER_SIZE] {"\033[32mPASS\033[0m "};
+	char buffer[BUFFER_SIZE];
+	mcpy(PASS, buffer, sizeof(PASS) - 1);
 	if(!condition) mcpy(FAIL, buffer, sizeof(FAIL) - 1);
 	mcpy(description, &buffer[sizeof(FAIL)], COUNT - 1);
 	buffer[BUFFER_SIZE - 1] = '\n';
@@ -27,8 +29,10 @@ template<size_t COUNT>
 [[nodiscard]] static bool test(void* pointer, const char (&description)[COUNT]) noexcept
 {
 	constexpr const char FAIL[] {"\033[31mFAIL\033[0m nullptr check for "};
+	constexpr const char PASS[] {"\033[31mPASS\033[0m nullptr check for "};
 	constexpr size_t BUFFER_SIZE {sizeof(FAIL) + COUNT};
-	char buffer[BUFFER_SIZE] {"\033[32mPASS\033[0m nullptr check for "};
+	char buffer[BUFFER_SIZE];
+	mcpy(PASS, buffer, sizeof(PASS) - 1);
 	if(!pointer) mcpy(FAIL, buffer, sizeof(FAIL) - 1);
 	mcpy(description, &buffer[sizeof(FAIL)], COUNT - 1);
 	buffer[BUFFER_SIZE - 1] = '\n';
