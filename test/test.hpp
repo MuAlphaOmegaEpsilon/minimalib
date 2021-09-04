@@ -10,17 +10,27 @@
 #define TEST_SUITE(function) write("\n\033[37;1m" STR(function) "\033[0m\n") && test(function, "")
 #define TEST(condition) test(condition, STR(condition) ", line " STR(__LINE__))
 
+template <size_t COUNT>
+void test_set_failure(char(*buffer)[COUNT])
+{
+	static_assert(COUNT > 8);
+	// Set color to red
+	--(*buffer)[3];
+	// Overwrite PASS with FAIL
+	(*buffer)[5] = 'F';
+	(*buffer)[7] = 'I';
+	(*buffer)[8] = 'L';
+}
+
 template<size_t COUNT>
 [[nodiscard]] static bool test(bool condition, const char (&description)[COUNT]) noexcept
 {
-	constexpr const char FAIL[] {"\033[31mFAIL\033[0m "};
-	constexpr const char PASS[] {"\033[31mPASS\033[0m "};
-	constexpr size_t BUFFER_SIZE {sizeof(FAIL) + COUNT};
-	char buffer[BUFFER_SIZE];
-	mcpy(PASS, buffer, sizeof(PASS) - 1);
-	if(!condition) mcpy(FAIL, buffer, sizeof(FAIL) - 1);
-	mcpy(description, &buffer[sizeof(FAIL)], COUNT - 1);
+	constexpr size_t BUFFER_SIZE {14 + COUNT};
+	char buffer[BUFFER_SIZE] {
+		'\033', '[', '3', '2', 'm', 'P', 'A', 'S', 'S', '\033', '[', '0', 'm', ' '};
+	mcpy(description, &buffer[14], COUNT - 1);
 	buffer[BUFFER_SIZE - 1] = '\n';
+	if(!condition) test_set_failure(&buffer);
 	write(buffer);
 	return condition;
 }
@@ -28,14 +38,13 @@ template<size_t COUNT>
 template<size_t COUNT>
 [[nodiscard]] static bool test(void* pointer, const char (&description)[COUNT]) noexcept
 {
-	constexpr const char FAIL[] {"\033[31mFAIL\033[0m nullptr check for "};
-	constexpr const char PASS[] {"\033[31mPASS\033[0m nullptr check for "};
-	constexpr size_t BUFFER_SIZE {sizeof(FAIL) + COUNT};
-	char buffer[BUFFER_SIZE];
-	mcpy(PASS, buffer, sizeof(PASS) - 1);
-	if(!pointer) mcpy(FAIL, buffer, sizeof(FAIL) - 1);
-	mcpy(description, &buffer[sizeof(FAIL)], COUNT - 1);
+	constexpr size_t BUFFER_SIZE {32 + COUNT};
+	char buffer[BUFFER_SIZE] {'\033', '[', '3', '2', 'm', 'P', 'A', 'S', 'S', '\033', '[',
+							  '0',	  'm', ' ', 'n', 'u', 'l', 'l', 'p', 't', 'r',	  ' ',
+							  'c',	  'h', 'e', 'c', 'k', ' ', 'f', 'o', 'r', ' '};
+	mcpy(description, &buffer[32], COUNT - 1);
 	buffer[BUFFER_SIZE - 1] = '\n';
+	if(!pointer) test_set_failure(&buffer);
 	write(buffer);
 	return static_cast<bool>(pointer);
 }
