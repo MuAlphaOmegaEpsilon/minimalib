@@ -1,6 +1,5 @@
 #pragma once
 #include "fd.hpp"
-#include "macro/asm.hpp"
 #include <stddef.h>
 
 [[gnu::naked]] static int write([[maybe_unused]] fd file_des,
