@@ -6,15 +6,13 @@ include_directories(..)
 
 set(BUILD_TESTING ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_LINK_WHAT_YOU_USE TRUE)
 set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 20)
 
-if(WIN32)
-else()
-	add_compile_options(
+# Add compilation flags
+add_compile_options(
 	-Wall
 	-Warray-bounds
 	-Wcast-align
@@ -29,10 +27,7 @@ else()
 	-Wfloat-equal
 	-Wformat=2
 	-Wformat-nonliteral
-	-Wformat-overflow=2
 	-Wformat-security
-	-Wformat-signedness
-	-Wformat-truncation=1
 	-Wformat-y2k
 	-Wimplicit-fallthrough
 	-Wimport
@@ -62,7 +57,6 @@ else()
 	-Wstrict-aliasing
 	-Wstrict-aliasing=2
 	-Wstrict-overflow=5
-	-Wstringop-overflow=4
 	-Wswitch
 	-Wswitch-default
 	-Wswitch-enum
@@ -71,7 +65,6 @@ else()
 	-Wuninitialized
 	-Wunknown-pragmas
 	-Wunreachable-code
-	-Wunsafe-loop-optimizations
 	-Wunused
 	-Wunused-function
 	-Wunused-label
@@ -82,10 +75,21 @@ else()
 	-Wvolatile-register-var
 	-Wwrite-strings
 	)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+	add_compile_options(
+		-Wformat-overflow=2
+		-Wformat-signedness
+		-Wformat-truncation=1
+		-Wstringop-overflow=4
+		-Wunsafe-loop-optimizations
+		)
+endif()
 
-	add_compile_options(-ggdb -fno-stack-protector -ffreestanding -ffunction-sections -fdata-sections -fno-unwind-tables -fno-asynchronous-unwind-tables -fno-rtti -fno-exceptions)
-	add_link_options(-nostdlib -s -no-pie -Wl,-n -Wl,--build-id=none)
-	add_link_options(-Wl,-gc-sections)
+# Allow compilation without glibc
+add_compile_options(-ggdb -fno-stack-protector -ffreestanding -ffunction-sections -fdata-sections -fno-unwind-tables -fno-asynchronous-unwind-tables -fno-rtti -fno-exceptions)
+add_link_options(-nostdlib -Wl,--build-id=none -Wl,-gc-sections)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+	add_link_options(-s -no-pie -Wl,-n)
 endif()
 
 add_executable(entrypoint_start entrypoint_start.cpp)
