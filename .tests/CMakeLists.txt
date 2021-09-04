@@ -92,7 +92,7 @@ add_compile_options(
   -fno-rtti
   -fno-exceptions)
 add_link_options(-nostdlib)
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
   add_link_options(-s -no-pie -Wl,-n -Wl,--build-id=none -Wl,-gc-sections)
 endif()
 
