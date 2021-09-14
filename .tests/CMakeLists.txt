@@ -99,5 +99,5 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
   add_link_options(-Wl,-no_pie)
 endif()
 
-add_executable(entrypoint_start entrypoint_start.cpp ../entrypoint/start.s)
+add_executable(entrypoint_start entrypoint_start.cpp ../entrypoint/start.S)
 add_test("entrypoint\/start.s" entrypoint_start)
