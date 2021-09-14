@@ -5,6 +5,7 @@ on:
       - '.github/workflows/tests.yml'
       - '**/CMakeLists.txt'
       - '**.cmake'
+      - '**.s'
       - '**.hpp'
       - '**.cpp'
 
