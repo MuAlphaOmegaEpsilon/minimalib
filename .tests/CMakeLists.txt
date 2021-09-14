@@ -82,18 +82,19 @@ endif()
 
 # Allow compilation without glibc
 add_compile_options(
-  -ggdb
-  -fno-stack-protector
+  -fdata-sections
   -ffreestanding
   -ffunction-sections
-  -fdata-sections
-  -fno-unwind-tables
   -fno-asynchronous-unwind-tables
+  -fno-exceptions
   -fno-rtti
-  -fno-exceptions)
-add_link_options(-nostdlib)
+  -fno-stack-check
+  -fno-stack-protector
+  -fno-unwind-tables)
+add_link_options(-nostdlib -static)
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-  add_link_options(-s -no-pie -Wl,-n -Wl,--build-id=none -Wl,-gc-sections)
+  add_compile_options(-fno-stack-clash-protection)
+  add_link_options(-s -Wl,-n,--build-id=none,-gc-sections)
 else if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
   add_link_options(-Wl,-no_pie)
 endif()
