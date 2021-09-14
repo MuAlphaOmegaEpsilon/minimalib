@@ -6,7 +6,11 @@
 								[[maybe_unused]] const char* buffer,
 								[[maybe_unused]] size_t count) noexcept
 {
+#ifdef __APPLE__
+	asm("mov $0x2000004,%rax");
+#else
 	asm("mov $1,%rax");
+#endif
 	asm("syscall");
 	asm("retq");
 }

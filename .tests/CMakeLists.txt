@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16.2)
-project(minimalib-tests LANGUAGES CXX)
+project(minimalib-tests LANGUAGES CXX ASM)
 
 include(CTest)
 include_directories(..)
@@ -94,7 +94,9 @@ add_compile_options(
 add_link_options(-nostdlib)
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
   add_link_options(-s -no-pie -Wl,-n -Wl,--build-id=none -Wl,-gc-sections)
+else if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
+  add_link_options(-Wl,-no_pie)
 endif()
 
-add_executable(entrypoint_start entrypoint_start.cpp)
-add_test("entrypoint\/start.hpp" entrypoint_start)
+add_executable(entrypoint_start entrypoint_start.cpp ../entrypoint/start.s)
+add_test("entrypoint\/start.s" entrypoint_start)
