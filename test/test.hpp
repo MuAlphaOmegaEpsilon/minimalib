@@ -10,8 +10,8 @@
 #define TEST_SUITE(function) write("\n\033[37;1m" STR(function) "\033[0m\n") && test(function, "")
 #define TEST(condition) test(condition, STR(condition) ", line " STR(__LINE__))
 
-template <size_t COUNT>
-void test_set_failure(char(*buffer)[COUNT])
+template<size_t COUNT>
+void test_set_failure(char (*buffer)[COUNT])
 {
 	static_assert(COUNT > 8);
 	// Set color to red
