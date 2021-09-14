@@ -1,14 +1,16 @@
-.text
-
-#ifdef __linux__
+#ifdef __gnu_linux__
 	#define start _start
 	#define SYSCALL_EXIT $60
 #elif __APPLE__
 	#define main _main
 	#define SYSCALL_EXIT $0x2000001
+#else
+	#error Unsupported platform
 #endif
 
 .global start
+.text
+
 start:
 	xor %rbp,%rbp			   # Clean base pointer, required by ABI
 	mov (%rsp),%rdi			   # argc
