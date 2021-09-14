@@ -95,7 +95,7 @@ add_link_options(-nostdlib -static)
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
   add_compile_options(-fno-stack-clash-protection)
   add_link_options(-s -Wl,-n,--build-id=none,-gc-sections)
-else if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
+elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
   add_link_options(-Wl,-no_pie)
 endif()
 
