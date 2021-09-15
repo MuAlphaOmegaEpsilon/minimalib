@@ -9,7 +9,7 @@
 {
 #ifdef __APPLE__
 	asm("mov $0x2000004,%rax");
-#else
+#elif __gnu__linux__
 	asm("mov $1,%rax");
 #endif
 	asm("syscall");
