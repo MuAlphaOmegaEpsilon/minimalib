@@ -16,7 +16,10 @@
 	asm("retq");
 }
 
-static int64_t write(const char buffer[], size_t count) { return write(STDOUT, buffer, count); }
+[[maybe_unused]] static int64_t write(const char buffer[], size_t count)
+{
+	return write(STDOUT, buffer, count);
+}
 
 template<size_t COUNT>
 int64_t write(const char (&buffer)[COUNT])
