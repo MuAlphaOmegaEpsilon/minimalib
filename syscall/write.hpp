@@ -4,8 +4,8 @@
 #include <stdint.h>
 
 [[gnu::naked]] static int64_t write([[maybe_unused]] fd file_des,
-								[[maybe_unused]] const char* buffer,
-								[[maybe_unused]] size_t count) noexcept
+									[[maybe_unused]] const char* buffer,
+									[[maybe_unused]] size_t count) noexcept
 {
 #ifdef __APPLE__
 	asm("mov $0x2000004,%rax");
@@ -16,10 +16,7 @@
 	asm("retq");
 }
 
-static int64_t write(const char buffer[], size_t count)
-{
-	return write(STDOUT, buffer, count);
-}
+static int64_t write(const char buffer[], size_t count) { return write(STDOUT, buffer, count); }
 
 template<size_t COUNT>
 int64_t write(const char (&buffer)[COUNT])
