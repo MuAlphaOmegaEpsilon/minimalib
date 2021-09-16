@@ -25,11 +25,21 @@ bool to_stderr()
 	return pass;
 }
 
+bool generate_error()
+{
+	constexpr fd INVALID {255};
+	bool pass {true};
+	pass &= TEST(write(INVALID, "") == EBADF);
+	pass &= TEST(write(STDOUT, "", UINT64_MAX) == EINVAL);
+	return pass;
+}
+
 extern "C" int main()
 {
 	TEST_MAIN();
 	bool pass {true};
 	pass &= TEST_SUITE(to_stdout());
 	pass &= TEST_SUITE(to_stderr());
+	pass &= TEST_SUITE(generate_error());
 	return !pass;
 }

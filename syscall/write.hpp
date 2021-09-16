@@ -3,6 +3,23 @@
 #include <stddef.h>
 #include <stdint.h>
 
+enum WRITE_ERROR : int64_t
+{
+	EDQUOT = -132,		  // Disk quota exceeded
+	EDESTADDRREQ = -121,  // Destination address required
+	EPIPE = -32,		  // Broken pipe
+	ENOSPC = -28,		  // No space left on device
+	EFBIG = -27,		  // File too large
+	EINVAL = -22,		  // Invalid argument
+	EFAULT = -14,		  // Bad address
+	EAGAIN = -11,		  // No more processes
+	EWOULDBLOCK = EAGAIN, // Operation would block
+	EBADF = -9,			  // Bad file number
+	EIO = -5,			  // I/O error
+	EINTR = -4,			  // Interrupted system call
+	EPERM = -1,			  // Not super-user
+};
+
 [[gnu::naked]] static int64_t write([[maybe_unused]] fd file_des,
 									[[maybe_unused]] const char* buffer,
 									[[maybe_unused]] size_t count) noexcept
