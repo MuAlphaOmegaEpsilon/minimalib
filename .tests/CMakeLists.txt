@@ -104,4 +104,4 @@ add_test("entrypoint\/start.s" entrypoint_start)
 
 add_executable(syscall_exit syscall_exit.cpp ../entrypoint/start.S)
 add_test("syscall\/exit.hpp" syscall_exit)
-target_compile_options(syscall_exit PRIVATE -Wno-suggest-attribute=noreturn)
+target_compile_options(syscall_exit PRIVATE -Wno-unknown-warning-option -Wno-suggest-attribute=noreturn)
