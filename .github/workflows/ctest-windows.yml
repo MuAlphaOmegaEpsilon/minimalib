@@ -18,24 +18,24 @@ jobs:
       matrix:
         os: [windows-2019]
     steps:
-      - name: Cache LLVM and Clang
-        id: cache-llvm
-        uses: actions/cache@v2
-        with:
-          path: |
-            C:/Program Files/LLVM
-            ./llvm
-          key: llvm-12
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install LLVM and Clang
-        uses: KyleMayes/install-llvm-action@v1.4.1
-        with:
-          version: "12.0"
-          cached: ${{ steps.cache-llvm.outputs.cache-hit }}
+      # - name: Cache LLVM and Clang
+        # id: cache-llvm
+        # uses: actions/cache@v2
+        # with:
+          # path: |
+            # C:/Program Files/LLVM
+            # ./llvm
+          # key: llvm-12
+      # - name: Install LLVM and Clang
+        # uses: KyleMayes/install-llvm-action@v1.4.1
+        # with:
+          # version: "12.0"
+          # cached: ${{ steps.cache-llvm.outputs.cache-hit }}
       - name: Build tests
         run: |
-          cmake -B build -S .tests
+          cmake -B build -S .tests -DCMAKE_CXX_COMPILER=clang
           cmake --build build
       - name: Run tests
         run: |
