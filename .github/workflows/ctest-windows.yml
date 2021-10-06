@@ -21,20 +21,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Cache LLVM and Clang
-        id: cache
         uses: actions/cache@v2
         with:
-          path: |
-            C:/Program Files/LLVM
-            ./llvm
+          path: C:/Program Files/LLVM
           key: llvm-12
       - name: Install LLVM and Clang
-        uses: egor-tensin/setup-clang@v1
-        with:
-          version: "13.0"
+        run: choco install llvm
       - name: Build tests
         run: |
-          cmake -B build -S .tests -DCMAKE_CXX_COMPILER=clang++
+          cmake -B build -S .tests -DCMAKE_CXX_COMPILER="C:\Program Files\LLVM\bin\clang++.exe"
           cmake --build build
       - name: Run tests
         run: |
