@@ -2,7 +2,7 @@ name: ctest-windows
 on:
   push:
     paths:
-      - '.github/workflows/tests.yml'
+      - '.github/workflows/ctest-windows.yml'
       - '**/CMakeLists.txt'
       - '**.cmake'
       - '**.s'

@@ -2,7 +2,7 @@ name: ctest-unix
 on:
   push:
     paths:
-      - '.github/workflows/tests.yml'
+      - '.github/workflows/ctest-unix.yml'
       - '**/CMakeLists.txt'
       - '**.cmake'
       - '**.s'
