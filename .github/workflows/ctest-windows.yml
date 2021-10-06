@@ -20,22 +20,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      # - name: Cache LLVM and Clang
-        # id: cache-llvm
-        # uses: actions/cache@v2
-        # with:
-          # path: |
-            # C:/Program Files/LLVM
-            # ./llvm
-          # key: llvm-12
-      # - name: Install LLVM and Clang
-        # uses: KyleMayes/install-llvm-action@v1.4.1
-        # with:
-          # version: "12.0"
-          # cached: ${{ steps.cache-llvm.outputs.cache-hit }}
+      - name: Cache LLVM and Clang
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            C:/Program Files/LLVM
+            ./llvm
+          key: llvm-12
+      - name: Install LLVM and Clang
+        uses: egor-tensin/setup-clang@v1
+        with:
+          version: "13.0"
       - name: Build tests
         run: |
-          cmake -B build -S .tests -DCMAKE_CXX_COMPILER=clang
+          cmake -B build -S .tests -DCMAKE_CXX_COMPILER=clang++
           cmake --build build
       - name: Run tests
         run: |
