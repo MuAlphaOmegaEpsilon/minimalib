@@ -1,0 +1,32 @@
+name: ctest-unix
+on:
+  push:
+    paths:
+      - '.github/workflows/tests.yml'
+      - '**/CMakeLists.txt'
+      - '**.cmake'
+      - '**.s'
+      - '**.hpp'
+      - '**.cpp'
+
+jobs:
+  tests:
+    name: ctest-unix
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-20.04, macos-11, macos-10.15]
+    env:
+      TERM: xterm-256color
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build tests
+        run: |
+          cmake -B build -S .tests
+          cmake --build build
+      - name: Run tests
+        run: |
+          cd build
+          ctest --timeout 1 --output-on-failure
