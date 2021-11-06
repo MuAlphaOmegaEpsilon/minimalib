@@ -24,7 +24,6 @@ jobs:
         run: choco install ninja
       - name: Build tests
         run: |
-          cmake --version
           cmake -B build -S .tests -G Ninja -DCMAKE_SYSTEM_NAME="Generic" -DCMAKE_CXX_COMPILER="clang++.exe" -DCMAKE_ASM_COMPILER="clang++.exe" -DCMAKE_ASM_COMPILER_ID="Clang" -DCMAKE_CXX_COMPILER_ID="Clang"
           cmake --build build
       - name: Run tests
