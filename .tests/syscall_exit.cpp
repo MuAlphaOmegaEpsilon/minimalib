@@ -1,5 +1,6 @@
-#include "../syscall/exit.hpp"
-#include "../test/test.hpp"
+#include <entrypoint/start.hpp>
+#include <syscall/exit.hpp>
+#include <test/test.hpp>
 
 extern "C" int main()
 {

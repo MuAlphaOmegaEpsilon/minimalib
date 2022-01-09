@@ -1,3 +1,4 @@
+#include <entrypoint/start.hpp>
 #include <test/test.hpp>
 
 bool is_argc_valid(int argc) { return TEST(argc == 1); }

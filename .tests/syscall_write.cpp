@@ -1,7 +1,7 @@
-#include "../fd.hpp"
-#include "../syscall/write.hpp"
-#include "../test/test.hpp"
-#include <cstdint>
+#include <entrypoint/start.hpp>
+#include <fd.hpp>
+#include <syscall/write.hpp>
+#include <test/test.hpp>
 
 bool to_stdout()
 {

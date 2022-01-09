@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16.2)
-project(minimalib-tests LANGUAGES CXX ASM)
+project(minimalib-tests LANGUAGES CXX)
 
 include(CTest)
 include_directories(..)
@@ -97,12 +97,12 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
   add_link_options(-Wl,-no_pie)
 endif()
 
-add_executable(entrypoint_start entrypoint_start.cpp ../entrypoint/start.S)
-add_test("entrypoint\/start.s" entrypoint_start)
+add_executable(entrypoint_start entrypoint_start.cpp)
+add_test("entrypoint\/start.hpp" entrypoint_start)
 
-add_executable(syscall_exit syscall_exit.cpp ../entrypoint/start.S)
+add_executable(syscall_exit syscall_exit.cpp)
 add_test("syscall\/exit.hpp" syscall_exit)
-target_compile_options(syscall_exit PRIVATE -Wno-unknown-warning-option -Wno-suggest-attribute=noreturn)
+#target_compile_options(syscall_exit PRIVATE -Wno-unknown-warning-option -Wno-suggest-attribute=noreturn)
 
-add_executable(syscall_write syscall_write.cpp ../entrypoint/start.S)
+add_executable(syscall_write syscall_write.cpp)
 add_test("syscall\/write.hpp" syscall_write)
