@@ -1,22 +1,19 @@
-name: ctest-unix
+name: CTest (macOS)
 on:
   push:
     paths:
-      - '.github/workflows/ctest-unix.yml'
+      - '.github/workflows/ctest-macos.yml'
       - '**/CMakeLists.txt'
       - '**.cmake'
-      - '**.s'
       - '**.hpp'
       - '**.cpp'
-
 jobs:
-  tests:
-    name: ctest-unix
+  ctest:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, macos-11, macos-10.15]
+        os: [macos-11, macos-10.15]
     env:
       TERM: xterm-256color
     steps:

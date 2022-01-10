@@ -1,25 +1,25 @@
-name: CTest (Windows)
+name: CTest (Linux)
 on:
   push:
     paths:
-      - '.github/workflows/ctest-windows.yml'
+      - '.github/workflows/ctest-linux.yml'
       - '**/CMakeLists.txt'
       - '**.cmake'
       - '**.hpp'
       - '**.cpp'
 jobs:
   ctest:
-    runs-on: windows-2022
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
+    env:
+      TERM: xterm-256color
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install Ninja
-        run: choco install ninja
       - name: Build tests
         run: |
-          cmake -B build -S .tests -G Ninja -DCMAKE_SYSTEM_NAME="Generic" -DCMAKE_CXX_COMPILER="clang++.exe" -DCMAKE_ASM_COMPILER="clang++.exe" -DCMAKE_ASM_COMPILER_ID="Clang" -DCMAKE_CXX_COMPILER_ID="Clang"
+          cmake -B build -S .tests
           cmake --build build
       - name: Run tests
         run: |
