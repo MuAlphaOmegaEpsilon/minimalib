@@ -26,7 +26,7 @@ extern "C" [[noreturn, gnu::naked, gnu::used]] void start() asm("start")
 	asm("mov $0x2000001,%rax");			  // Load exit code
 	asm("syscall");
 }
-#elif
+#else
 extern "C" [[noreturn, gnu::naked, gnu::used]] void start()
 {
 	asm("xor %rbp,%rbp");				  // Clean base pointer, required by ABI
@@ -39,5 +39,4 @@ extern "C" [[noreturn, gnu::naked, gnu::used]] void start()
 	asm("mov $0x002C,%rax");			  // Load exit code
 	asm("int 2E");
 }
-
 #endif
