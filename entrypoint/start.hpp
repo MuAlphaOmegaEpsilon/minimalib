@@ -14,7 +14,8 @@ extern "C" [[noreturn, gnu::naked, gnu::used]] void _start()
 	asm("syscall");
 }
 #elif __APPLE__
-extern "C" [[noreturn, gnu::naked, gnu::used]] void start() asm("start")
+extern "C" [[noreturn, gnu::naked, gnu::used]] void start() asm("start");
+extern "C" [[noreturn, gnu::naked, gnu::used]] void start()
 {
 	asm("xor %rbp,%rbp");				  // Clean base pointer, required by ABI
 	asm("mov (%rsp),%rdi");				  // argc
