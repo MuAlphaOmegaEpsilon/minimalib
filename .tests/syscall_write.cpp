@@ -28,7 +28,7 @@ bool to_stderr()
 bool generate_error()
 {
 	bool pass {true};
-	pass &= TEST(write(fd_t{123}, "") == ewrite::BADF);
+	pass &= TEST(write(fd_t {123}, "") == ewrite::BADF);
 	pass &= TEST(write(STDOUT, "", UINT64_MAX) == ewrite::FAULT);
 	return pass;
 }
