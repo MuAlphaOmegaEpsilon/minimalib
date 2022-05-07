@@ -1,5 +1,5 @@
 #include <entrypoint/start.hpp>
-#include <fd.hpp>
+#include <syscall/ewrite.hpp>
 #include <syscall/write.hpp>
 #include <test/test.hpp>
 
@@ -27,10 +27,9 @@ bool to_stderr()
 
 bool generate_error()
 {
-	constexpr fd INVALID {255};
 	bool pass {true};
-	pass &= TEST(write(INVALID, "") == EBADF);
-	pass &= TEST(write(STDOUT, "", UINT64_MAX) == EINVAL);
+	pass &= TEST(write(fd_t{123}, "") == ewrite::BADF);
+	pass &= TEST(write(STDOUT, "", UINT64_MAX) == ewrite::FAULT);
 	return pass;
 }
 

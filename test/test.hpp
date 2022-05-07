@@ -8,7 +8,7 @@
 
 #define TEST_MAIN() write("\033[33;1m" __FILE__ "\033[0m\n")
 #define TEST_SUITE(function) write("\n\033[37;1m" STR(function) "\033[0m\n") && test(function, "")
-#define TEST(condition) test(condition, STR(condition) ", line " STR(__LINE__))
+#define TEST(condition) test(condition, STR(condition) ", line " STR(__LINE__) "\n")
 
 template<size_t COUNT>
 void test_set_failure(char (*buffer)[COUNT])
@@ -27,9 +27,8 @@ template<size_t COUNT>
 {
 	constexpr size_t BUFFER_SIZE {14 + COUNT};
 	char buffer[BUFFER_SIZE] {
-		'\033', '[', '3', '2', 'm', 'P', 'A', 'S', 'S', '\033', '[', '0', 'm', ' '};
+		'\033', '[', '3', '2', 'm', 'P', 'A', 'S', 'S', '\033', '[', '0', 'm', ' ', '\n'};
 	mcpy(description, &buffer[14], COUNT - 1);
-	buffer[BUFFER_SIZE - 1] = '\n';
 	if(!condition) test_set_failure(&buffer);
 	write(buffer);
 	return condition;
@@ -43,7 +42,6 @@ template<size_t COUNT>
 							  '0',	  'm', ' ', 'n', 'u', 'l', 'l', 'p', 't', 'r',	  ' ',
 							  'c',	  'h', 'e', 'c', 'k', ' ', 'f', 'o', 'r', ' '};
 	mcpy(description, &buffer[32], COUNT - 1);
-	buffer[BUFFER_SIZE - 1] = '\n';
 	if(!pointer) test_set_failure(&buffer);
 	write(buffer);
 	return static_cast<bool>(pointer);

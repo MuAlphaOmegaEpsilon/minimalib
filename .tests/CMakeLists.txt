@@ -7,7 +7,7 @@ include_directories(..)
 set(BUILD_TESTING ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_BUILD_TYPE Release)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++2a")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 
 # Add compilation flags
 add_compile_options(
@@ -102,7 +102,6 @@ add_test("entrypoint\/start.hpp" entrypoint_start)
 
 add_executable(syscall_exit syscall_exit.cpp)
 add_test("syscall\/exit.hpp" syscall_exit)
-#target_compile_options(syscall_exit PRIVATE -Wno-unknown-warning-option -Wno-suggest-attribute=noreturn)
 
 add_executable(syscall_write syscall_write.cpp)
 add_test("syscall\/write.hpp" syscall_write)

@@ -1,17 +1,19 @@
 #pragma once
-#include "../fd.hpp"
-#include <stddef.h>
-#include <stdint.h>
 
 constexpr int EXIT_SUCCESS {0};
 constexpr int EXIT_FAILURE {1};
 
-[[gnu::naked]] static void exit([[maybe_unused]] int status) noexcept
+[[gnu::naked, noreturn]] static void sys_exit(int) noexcept
 {
-#ifdef __APPLE__
-	asm("mov $0x2000001,%rax");
-#elif __gnu_linux__
+#if __gnu_linux__ && __x86_64__
 	asm("mov $60,%rax");
-#endif
 	asm("syscall");
+#elif __APPLE__ && __x86_64__
+	asm("mov $0x2000001,%rax");
+	asm("syscall");
+#else
+	#pragma message("Unimplemented write function")
+#endif
 }
+
+[[maybe_unused, noreturn]] static void exit(int status) noexcept { sys_exit(status); }
