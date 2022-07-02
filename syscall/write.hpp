@@ -13,6 +13,9 @@
 	asm("mov $0x2000004,%rax");
 	asm("syscall");
 	asm("retq");
+#elif _WIN32 && __x86_64__
+
+	asm("call WriteFile");
 #else
 	#pragma message("Unimplemented write function")
 #endif

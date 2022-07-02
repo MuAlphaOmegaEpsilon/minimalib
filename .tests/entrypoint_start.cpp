@@ -5,7 +5,7 @@ bool is_argc_valid(int argc) { return TEST(argc == 1); }
 bool is_argv_valid(char** const& argv) { return TEST(argv); }
 bool is_envp_valid(char** const& envp) { return TEST(envp); }
 
-extern "C" int main(int argc, char* argv[], char* envp[])
+int main(int argc, char* argv[], char* envp[])
 {
 	TEST_MAIN();
 	bool pass {true};
