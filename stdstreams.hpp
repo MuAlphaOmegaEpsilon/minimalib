@@ -10,7 +10,7 @@ extern "C" const fd_t STDIN;
 extern "C" const fd_t STDOUT;
 extern "C" const fd_t STDERR;
 #else
-constinit fd_t STDIN {0};
-constinit fd_t STDOUT {1};
-constinit fd_t STDERR {2};
+constexpr fd_t STDIN {0};
+constexpr fd_t STDOUT {1};
+constexpr fd_t STDERR {2};
 #endif
