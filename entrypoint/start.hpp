@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../fd.hpp"
+#include "../stdstreams.hpp"
+
 #if _WIN32
 const fd_t STDIN{};
 const fd_t STDOUT{};
