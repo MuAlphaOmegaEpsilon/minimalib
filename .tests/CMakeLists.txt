@@ -95,6 +95,8 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
   add_link_options(-s -Wl,-n,--build-id=none,-gc-sections)
 elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
   add_link_options(-Wl,-no_pie)
+else()
+	add_link_options(-Wl,-entry:start,-debug:none,-nodefaultlib,-fixed,-subsystem:console,-incremental:no,-Lkernel32.dll)
 endif()
 
 add_executable(entrypoint_start entrypoint_start.cpp)
