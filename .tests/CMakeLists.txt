@@ -89,12 +89,12 @@ add_compile_options(
   -fno-stack-check
   -fno-stack-protector
   -fno-unwind-tables)
-add_link_options(-nostdlib -static --entry=start)
+add_link_options(-nostdlib -static)
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
   add_compile_options(-fno-stack-clash-protection)
-  add_link_options(-s -Wl,-n,--build-id=none,-gc-sections)
+  add_link_options(-s -Wl,-n,--build-id=none,-gc-sections,--entry=start)
 elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
-  add_link_options(-Wl,-no_pie)
+  add_link_options(-Wl,-no_pie,-estart)
 else()
   add_compile_options(-fuse-ld=lld)
   add_link_options(-fuse-ld=lld -Wl,-entry:start,-debug:none,-nodefaultlib,-fixed,-subsystem:console,-incremental:no)
