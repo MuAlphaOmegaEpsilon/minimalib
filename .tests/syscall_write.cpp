@@ -33,7 +33,7 @@ bool generate_error()
 	return pass;
 }
 
-extern "C" int main()
+int main()
 {
 	TEST_MAIN();
 	bool pass {true};
