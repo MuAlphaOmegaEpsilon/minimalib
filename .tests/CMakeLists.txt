@@ -89,7 +89,7 @@ add_compile_options(
   -fno-stack-check
   -fno-stack-protector
   -fno-unwind-tables)
-add_link_options(-nostdlib -static -estart)
+add_link_options(-nostdlib -static --entry=start)
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
   add_compile_options(-fno-stack-clash-protection)
   add_link_options(-s -Wl,-n,--build-id=none,-gc-sections)
