@@ -3,9 +3,9 @@
 #include "../stdstreams.hpp"
 
 #if _WIN32
-const fd_t STDIN{};
-const fd_t STDOUT{};
-const fd_t STDERR{};
+const fd_t STDIN {};
+const fd_t STDOUT {};
+const fd_t STDERR {};
 #endif
 
 int main() asm("main");
@@ -18,7 +18,8 @@ extern "C" [[
 	noreturn,
 #endif
 	gnu::naked,
-	gnu::used]] void start()
+	gnu::used]] void
+start()
 {
 #if __linux__ && __x86_64__
 	asm("xor %rbp, %rbp");				   // Clean base pointer, required by ABI
@@ -42,27 +43,27 @@ extern "C" [[
 	asm("syscall");
 #elif _WIN32 && __x86_64__
 	#pragma message("Arguments are ordered the other way around")
-	asm("mov $-10, %rcx");	  // Request STDIN handle
-	asm("call GetStdHandle"); // docs.microsoft.com/en-us/windows/console/getstdhandle
-	asm("movl %eax, STDIN(%rip)");
-	asm("mov $-11, %rcx");	  // Request STDOUT handle
-	asm("call GetStdHandle"); // docs.microsoft.com/en-us/windows/console/getstdhandle
-	asm("movl %eax, STDOUT(%rip)");
-	asm("mov $-12, %rcx");	  // Request STDERR handle
-	asm("call GetStdHandle"); // docs.microsoft.com/en-us/windows/console/getstdhandle
-	asm("movl %eax, STDERR(%rip)");
-	asm("call GetCommandLineA"); // Defined in processenv.h, fills RAX with entire cmdline string
-	asm("xor %rcx, %rcx");		 // RCX will be later filled with argc
-	asm("xor %r8, %r8");		 // R8 will be later used to count cmdline string length
-	asm("mov %rsp, %r9");		 // R9 will be later used to restore the original RSP
+	asm("mov $-10, %rcx");			// Request STDIN handle
+	asm("call GetStdHandle");		// docs.microsoft.com/en-us/windows/console/getstdhandle
+	asm("movl %eax, STDIN(%rip)");	// Populate STDIN variable with GetStdHandle return value
+	asm("mov $-11, %rcx");			// Request STDOUT handle
+	asm("call GetStdHandle");		// docs.microsoft.com/en-us/windows/console/getstdhandle
+	asm("movl %eax, STDOUT(%rip)"); // Populate STDOUT variable with GetStdHandle return value
+	asm("mov $-12, %rcx");			// Request STDERR handle
+	asm("call GetStdHandle");		// docs.microsoft.com/en-us/windows/console/getstdhandle
+	asm("movl %eax, STDERR(%rip)"); // Populate STDOUT variable with GetStdHandle return value
+	asm("call GetCommandLineA");	// Defined in processenv.h, fills RAX with entire cmdline string
+	asm("xor %rcx, %rcx");			// RCX will be later filled with argc
+	asm("xor %r8, %r8");			// R8 will be later used to count cmdline string length
+	asm("mov %rsp, %r9");			// R9 will be later used to restore the original RSP
 	// Start extracting arguments from whole cmdline string
 	asm("loop_extract_arg:");
 	asm("inc %r8");					 // Increment cmdline string length
 	asm("cmpb $0, (%rax, %r8, 1)");	 // Compare '\0' against current character
 	asm("je loop_extract_arg_end");	 // Break the loop if a null termination character is found
 	asm("cmpb $32, (%rax, %r8, 1)"); // Compare ' ' against current character
-	asm("jle arg_found");
-	asm("jmp loop_extract_arg");
+	asm("jle arg_found");			 // Enter the loop body if the argument was found
+	asm("jmp loop_extract_arg");	 // Perform new loop iteration
 	// Loop body
 	asm("arg_found:");
 	asm("movb $0,(%rax, %r8, 1)");	 // Write '\0' at the end of each arg, hence replacing every ' '
@@ -77,10 +78,10 @@ extern "C" [[
 	asm("inc %rcx");  // Increment argc
 	// Call main and exit
 	asm("mov %rsp, %rdx"); // Use RSP as argv
-	asm("push %r9"); // Push the previous content of RSP
+	asm("push %r9");	   // Push the previous content of RSP
 	asm("call main");
 	asm("pop %rsp"); // Restore the previously pushed content of RSP
-	asm("ret"); // Return back to the OS the value in RAX
+	asm("ret");		 // Return back to the OS the value in RAX
 #else
 	#pragma message("Unimplemented start function")
 #endif

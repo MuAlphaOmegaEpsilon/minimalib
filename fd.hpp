@@ -6,4 +6,3 @@ struct fd_t
 {
 	unsigned int id;
 };
-
