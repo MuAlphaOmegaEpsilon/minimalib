@@ -28,8 +28,8 @@ bool to_stderr()
 bool generate_error()
 {
 	bool pass {true};
-	pass &= TEST(write(fd_t {123}, "") == EBADF);
-	pass &= TEST(write(STDOUT, "", UINT64_MAX) == EFAULT);
+	pass &= TEST(write(fd_t {123}, "") == E_BADF);
+	pass &= TEST(write(STDOUT, "", UINT64_MAX) == E_FAULT);
 	return pass;
 }
 
