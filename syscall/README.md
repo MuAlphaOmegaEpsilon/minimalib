@@ -2,13 +2,27 @@
 Here is a collection of POSIX-like functions to directly perform syscalls.
 
 ## write
-Write a given amount of bytes to a file referred by the corresponding file descriptor.
+Writes a given amount of bytes to a file referred by the corresponding file descriptor.<br>
+Returns a positive integer to report the number of bytes written.<br>
+Returns a negative integer to report error codes.
 
-### Overloads
-#### int64_t write(fd_t file_des, const char* buffer, size_t count)
-#### int64_t write(const char* buffer, size_t count) noexcept
-#### int64_t write(const char (&buffer)[COUNT], size_t count = COUNT) [TEMPLATED]
-#### int64_t write(fd_t file_des, const char (&buffer)[COUNT], size_t count = COUNT) [TEMPLATED]
+#### Overloads
+##### int64_t write(const char (&buffer)[COUNT], size_t count = COUNT) [TEMPLATED]
+```c++
+write("Hello World!"); // Writes to stdout by default
+```
+##### int64_t write(fd_t file_des, const char (&buffer)[COUNT], size_t count = COUNT) [TEMPLATED]
+```c++
+write(myfile, "Hello World!");
+```
+##### int64_t write(const char* buffer, size_t count)
+```c++
+write("Hello World!", 12); // Writes to stdout by default
+```
+##### int64_t write(fd_t file_des, const char* buffer, size_t count)
+```c++
+write(myfile, "Hello World!", 12);
+```
 
 
 ## Useful links
