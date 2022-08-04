@@ -20,13 +20,13 @@ jobs:
           if git status --porcelain | grep " M"; then
             tput setaf 1
             tput bold
-            echo -e "The following files need to be formatted using clang-format:"
+            echo "The following files need to be formatted using clang-format:"
             tput sgr0
             echo git status --porcelain | grep " M" | colrm 1 2
             false
           else
             tput setaf 2
             tput bold
-            echo -e "Congratulations: all files are correctly formatted!"
+            echo "Congratulations: all files are correctly formatted!"
             tput sgr0
           fi
