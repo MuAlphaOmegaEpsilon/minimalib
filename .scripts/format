@@ -1,7 +1,7 @@
 #!/bin/sh
 set -euf
 
-cd $(dirname $0)
+cd $(dirname $0)/..
 
 for FILE in $(find -type f -iname "*.?pp"); do
 	clang-format -i $FILE &
