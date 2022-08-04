@@ -31,13 +31,13 @@
 }
 
 template<size_t COUNT>
-static int64_t write(const char (&buffer)[COUNT], size_t count = COUNT) noexcept
+static int64_t write(const char (&buffer)[COUNT], size_t count = COUNT - 1) noexcept
 {
 	return sys_write(STDOUT, buffer, count);
 }
 
 template<size_t COUNT>
-static int64_t write(fd_t file_des, const char (&buffer)[COUNT], size_t count = COUNT) noexcept
+static int64_t write(fd_t file_des, const char (&buffer)[COUNT], size_t count = COUNT - 1) noexcept
 {
 	return sys_write(file_des, buffer, count);
 }
