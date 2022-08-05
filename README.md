@@ -1,3 +1,7 @@
+[![](https://github.com/MuAlphaOmegaEpsilon/minimalib/actions/workflows/ctest-linux.yml/badge.svg)](https://github.com/MuAlphaOmegaEpsilon/minimalib/actions/workflows/ctest-linux.yml)
+[![](https://github.com/MuAlphaOmegaEpsilon/minimalib/actions/workflows/ctest-windows.yml/badge.svg)](https://github.com/MuAlphaOmegaEpsilon/minimalib/actions/workflows/ctest-windows.yml)
+[![](https://github.com/MuAlphaOmegaEpsilon/minimalib/actions/workflows/ctest-macos.yml/badge.svg)](https://github.com/MuAlphaOmegaEpsilon/minimalib/actions/workflows/ctest-macos.yml)
+[![](https://github.com/MuAlphaOmegaEpsilon/minimalib/actions/workflows/clang-format.yml/badge.svg)](https://github.com/MuAlphaOmegaEpsilon/minimalib/actions/workflows/clang-format.yml)
 # minimalib
 A library that aims at producing minimal executables, that allows to directly invoke syscalls with a thin layer of syntactic sugar and without using any libc implementation.
 Avoiding the linkage to libc grants a little reduction in compilation times, performance improvements due to the enabled inlining, security improvements and in general full control over every piece of code that actually runs.
