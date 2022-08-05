@@ -1,5 +1,5 @@
 # Syscalls
-Here is a collection of POSIX-like functions to directly perform syscalls.
+A collection of POSIX-like functions to directly perform syscalls.
 
 ## write
 Writes a given amount of bytes to a file referred by the corresponding file descriptor.<br>
