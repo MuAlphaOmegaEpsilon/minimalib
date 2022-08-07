@@ -6,8 +6,11 @@
 #include "macro/str.hpp"
 #include "syscall/write.hpp"
 
+// Prints to stdout the filename to clearly show the test that is being run
 #define TEST_MAIN() write("\033[33;1m" __FILE__ "\033[0m\n")
+// Prints to stdout the function name to clearly show the function that is being tested
 #define TEST_SUITE(function) write("\n\033[37;1m" STR(function) "\033[0m\n") && test(function, "")
+// Call the underlying test() function providing an automatically generated description
 #define TEST(condition) test(condition, STR(condition) ", line " STR(__LINE__) "\n")
 
 template<size_t COUNT>
@@ -20,6 +23,15 @@ void test_set_failure(char (*buffer)[COUNT])
 	(*buffer)[5] = 'F';
 	(*buffer)[7] = 'I';
 	(*buffer)[8] = 'L';
+}
+
+template<class T>
+[[nodiscard]] static bool test_eq(T reference, T target) noexcept
+{
+	char reference_string[128], target_string[128];
+	to_string(reference, &reference_string);
+	to_string(target, &target_string);
+	return reference == target;
 }
 
 template<size_t COUNT>
