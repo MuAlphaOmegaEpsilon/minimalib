@@ -3,7 +3,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
-[[gnu::naked]] static int64_t sys_write(fd_t file_des, const char* buffer, size_t count) noexcept
+[[gnu::naked, gnu::nonnull(2)]] static int64_t
+write(fd_t file_des, const char* buffer, size_t count) noexcept
 {
 #if __gnu_linux__ && __x86_64__
 	asm("mov $1, %rax");
@@ -20,24 +21,19 @@
 #endif
 }
 
-[[maybe_unused]] static int64_t write(fd_t file_des, const char* buffer, size_t count) noexcept
+[[maybe_unused, gnu::nonnull(1)]] static int64_t write(const char* buffer, size_t count) noexcept
 {
-	return sys_write(file_des, buffer, count);
-}
-
-[[maybe_unused]] static int64_t write(const char* buffer, size_t count) noexcept
-{
-	return sys_write(STDOUT, buffer, count);
+	return write(STDOUT, buffer, count);
 }
 
 template<size_t COUNT>
 static int64_t write(const char (&buffer)[COUNT], size_t count = COUNT - 1) noexcept
 {
-	return sys_write(STDOUT, buffer, count);
+	return write(STDOUT, buffer, count);
 }
 
 template<size_t COUNT>
 static int64_t write(fd_t file_des, const char (&buffer)[COUNT], size_t count = COUNT - 1) noexcept
 {
-	return sys_write(file_des, buffer, count);
+	return write(file_des, buffer, count);
 }

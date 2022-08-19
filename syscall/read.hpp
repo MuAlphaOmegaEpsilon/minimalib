@@ -1,22 +1,28 @@
 #pragma once
 #include "../fd.hpp"
+#include "../stdstreams.hpp"
 #include <stddef.h>
 #include <stdint.h>
 
-[[gnu::naked]] static int64_t read([[maybe_unused]] fd_t descriptor,
+[[gnu::naked, gnu::nonnull(2)]] static int64_t read([[maybe_unused]] fd_t descriptor,
 								   [[maybe_unused]] const char* buffer,
 								   [[maybe_unused]] size_t count) noexcept
 {
-#ifdef __APPLE__
-	asm("mov $0x2000003,%rax");
-#elif __gnu_linux__
+#if __gnu_linux__ && __x86_64__
 	asm("xor %rax,%rax"); // The syscall ID for read is 0, so RAX is zeroed out
-#endif
 	asm("syscall");
 	asm("retq");
+#elif __APPLE__ && __x86_64__
+	asm("mov $0x2000003,%rax");
+	asm("syscall");
+	asm("retq");
+// #elif _WIN32 && __x86_64__
+#else
+	#pragma message("Unimplemented write function")
+#endif
 }
 
-[[maybe_unused]] static int64_t read(const char buffer[], size_t count)
+[[maybe_unused, gnu::nonnull(1)]] static int64_t read(const char buffer[], size_t count)
 {
 	return read(STDIN, buffer, count);
 }

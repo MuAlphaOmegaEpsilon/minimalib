@@ -1,8 +1,8 @@
 #pragma once
 #include "../fd.hpp"
-#include <sys/types.h>
+#include <fcntl.h>
 
-[[gnu::naked]] static fd_t sys_open(const char* path, int flags, mode_t mode) noexcept
+[[gnu::naked, gnu::nonnull(1)]] static fd_t open(const char* path, int flags, mode_t mode) noexcept
 {
 #if __gnu_linux__ && __x86_64__
 	asm("mov $2, %rax");
@@ -15,4 +15,9 @@
 #else
 	#pragma message("Unimplemented write function")
 #endif
+}
+
+[[maybe_unused, gnu::nonnull(1)]] static fd_t open(const char* path) noexcept
+{
+	return open(path, O_RDWR, O_CREAT | O_APPEND);
 }
