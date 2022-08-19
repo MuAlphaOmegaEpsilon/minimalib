@@ -1,6 +1,7 @@
 FormatStyle: 'file'
 
 Checks: 'bugprone-*,
+-bugprone-reserved-identifier,
 clang-analyzer-*,
 -clang-analyzer*osx*,
 misc-unused-*,
