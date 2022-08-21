@@ -11,7 +11,8 @@ constexpr int EXIT_FAILURE {1};
 #elif __APPLE__ && __x86_64__
 	asm("mov $0x2000001,%rax");
 	asm("syscall");
+// #elif _WIN32 && __x86_64__
 #else
-	#pragma message("Unimplemented write function")
+	#pragma message("Unimplemented exit function")
 #endif
 }

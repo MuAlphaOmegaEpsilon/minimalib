@@ -12,8 +12,9 @@
 	asm("mov $0x2000005, %rax");
 	asm("syscall");
 	asm("retq");
+// #elif _WIN32 && __x86_64__
 #else
-	#pragma message("Unimplemented write function")
+	#pragma message("Unimplemented open function")
 #endif
 }
 
