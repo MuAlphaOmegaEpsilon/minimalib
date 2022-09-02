@@ -9,7 +9,6 @@ const fd_t STDERR {};
 #endif
 
 int main() asm("main");
-int main(int argc) asm("main");
 int main(int argc, char** argv) asm("main");
 int main(int argc, char** argv, char** envp) asm("main");
 
