@@ -4,8 +4,8 @@
 #include <stddef.h>
 #include <sys/mman.h>
 
-[[gnu::naked]] static int64_t
-_mmap(void* addr, size_t length, int prot, int flags, fd_t file, offset_t shift) noexcept
+[[gnu::naked]] static intptr_t
+_mmap(void* addr, size_t length, int prot, int flags, fd_t file, offset_t off) noexcept
 {
 #if __gnu_linux__ && __x86_64__
 	asm("mov $9, %rax");
@@ -19,18 +19,14 @@ _mmap(void* addr, size_t length, int prot, int flags, fd_t file, offset_t shift)
 #endif
 }
 
-[[maybe_unused]] static int64_t mmap(size_t length) noexcept
+[[maybe_unused]] static intptr_t mmap(size_t length) noexcept
 {
 	return _mmap(
-		nullptr, length, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE, fd_t {0}, offset_t {0});
+		nullptr, length, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANONYMOUS, fd_t {-1u}, offset_t {0});
 }
 
-/*
-[[maybe_unused, gnu::returns_nonnull]] static int64_t
-mmap(fd_t file) noexcept
+[[maybe_unused]] static intptr_t
+_mmap(fd_t file, size_t length, offset_t off = offset_t{0}) noexcept
 {
-	#warning Length cannot be zero in mmap overload, this should be fixed to a sound value or the
-interface changed altogether return mmap(nullptr, 0, PROT_READ | PROT_WRITE | PROT_EXEC,
-MAP_PRIVATE, file, 0);
+	return _mmap(nullptr, length, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE, file, off);
 }
-*/
