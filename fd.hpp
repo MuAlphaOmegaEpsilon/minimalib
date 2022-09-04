@@ -1,8 +1,10 @@
 #pragma once
+#include <stdint.h>
+
 // File descriptor
 //
 // Contains the identifier of an open file.
 struct fd_t
 {
-	unsigned int id;
+	uint32_t id;
 };
