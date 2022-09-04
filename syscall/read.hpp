@@ -5,8 +5,8 @@
 #include <stdint.h>
 
 [[gnu::naked, gnu::nonnull(2)]] static int64_t read([[maybe_unused]] fd_t descriptor,
-								   [[maybe_unused]] const char* buffer,
-								   [[maybe_unused]] size_t count) noexcept
+													[[maybe_unused]] const char* buffer,
+													[[maybe_unused]] size_t count) noexcept
 {
 #if __gnu_linux__ && __x86_64__
 	asm("xor %rax,%rax"); // The syscall ID for read is 0, so RAX is zeroed out

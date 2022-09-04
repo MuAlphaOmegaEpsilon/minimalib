@@ -21,12 +21,16 @@ _mmap(void* addr, size_t length, int prot, int flags, fd_t file, offset_t off) n
 
 [[maybe_unused]] static intptr_t mmap(size_t length) noexcept
 {
-	return _mmap(
-		nullptr, length, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANONYMOUS, fd_t {-1u}, offset_t {0});
+	return _mmap(nullptr,
+				 length,
+				 PROT_READ | PROT_WRITE | PROT_EXEC,
+				 MAP_PRIVATE | MAP_ANONYMOUS,
+				 fd_t {-1u},
+				 offset_t {0});
 }
 
 [[maybe_unused]] static intptr_t
-_mmap(fd_t file, size_t length, offset_t off = offset_t{0}) noexcept
+_mmap(fd_t file, size_t length, offset_t off = offset_t {0}) noexcept
 {
 	return _mmap(nullptr, length, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE, file, off);
 }

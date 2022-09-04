@@ -2,7 +2,8 @@
 #include "../fd.hpp"
 #include <fcntl.h>
 
-[[gnu::naked, gnu::nonnull(1)]] static fd_t open(const char* path, int32_t flags, mode_t mode) noexcept
+[[gnu::naked, gnu::nonnull(1)]] static fd_t
+open(const char* path, int32_t flags, mode_t mode) noexcept
 {
 #if __gnu_linux__ && __x86_64__
 	asm("mov $2, %rax");

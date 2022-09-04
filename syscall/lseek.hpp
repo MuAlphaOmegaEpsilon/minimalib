@@ -4,7 +4,8 @@
 
 using stat_t = struct stat;
 
-[[gnu::naked, maybe_unused]] static int32_t lseek(fd_t file, offset_t shift, uint32_t whence) noexcept
+[[gnu::naked, maybe_unused]] static int32_t
+lseek(fd_t file, offset_t shift, uint32_t whence) noexcept
 {
 #if __gnu_linux__ && __x86_64__
 	asm("mov $8, %rax");
