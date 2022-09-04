@@ -9,6 +9,7 @@ _mmap(void* addr, size_t length, int prot, int flags, fd_t file, offset_t shift)
 {
 #if __gnu_linux__ && __x86_64__
 	asm("mov $9, %rax");
+	asm("mov %rcx, %r10"); // Linux syscalls use R10 instead of RCX
 	asm("syscall");
 	asm("retq");
 // #elif __APPLE__ && __x86_64__
