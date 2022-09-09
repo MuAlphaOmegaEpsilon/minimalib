@@ -8,15 +8,8 @@ const fd_t STDOUT {};
 const fd_t STDERR {};
 #endif
 
-#if __clang__
-// By forward declaring main() here we are able to override its signature when it will later be
-// defined. This allows clang to correctly link the 'call main' ASM statement to the correct
-// function body. GCC instead is not happy about these forward declarations, so let's make these
-// invisible to it.
-int main() asm("main");
-int main(int argc, char** argv) asm("main");
-int main(int argc, char** argv, char** envp) asm("main");
-#endif
+#define main(...) main(__VA_ARGS__) asm("main"); \
+int main(__VA_ARGS__)
 
 extern "C" [[
 #if __linux__ || __APPLE__
