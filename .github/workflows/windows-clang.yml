@@ -21,7 +21,7 @@ jobs:
       - name: Build tests
         run: |
           # The "Generic" CMake system name is used to skip ABI checks on the compiler that would otherwise cause a failure in the CMake setup phase
-          cmake -B build -S .tests -G "Unix Makefiles" -DCMAKE_SYSTEM_NAME="Generic" -DCMAKE_CXX_COMPILER="clang++-14.exe" -DCMAKE_LINKER="lld-link"
+          cmake -B build -S .tests -G "Unix Makefiles" -DCMAKE_SYSTEM_NAME="Generic" -DCMAKE_CXX_COMPILER="clang++.exe" -DCMAKE_LINKER="lld-link"
           cmake --build build
       - name: Run tests
         run: |
