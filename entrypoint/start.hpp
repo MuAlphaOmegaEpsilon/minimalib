@@ -8,8 +8,9 @@ const fd_t STDOUT {};
 const fd_t STDERR {};
 #endif
 
-#define main(...) main(__VA_ARGS__) asm("main"); \
-int main(__VA_ARGS__)
+#define main(...)                                                                                  \
+	main(__VA_ARGS__) asm("main");                                                                 \
+	int main(__VA_ARGS__)
 
 extern "C" [[
 #if __linux__ || __APPLE__
