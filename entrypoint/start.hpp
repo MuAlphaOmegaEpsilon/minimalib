@@ -8,6 +8,8 @@ const fd_t STDOUT {};
 const fd_t STDERR {};
 #endif
 
+// Use the main symbol for the main() function, to prevent discrepancies between compilers and
+// operating systems
 #define main(...)                                                                                  \
 	main(__VA_ARGS__) asm("main");                                                                 \
 	int main(__VA_ARGS__)
