@@ -37,6 +37,7 @@ add_compile_options(
   -Wmissing-format-attribute
   -Wmissing-include-dirs
   -Wmissing-noreturn
+  -Wno-suggest-attribute=noreturn
   -Wno-unused-const-variable
   -Wno-unused-function
   -Wnull-dereference
