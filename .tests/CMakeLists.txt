@@ -37,7 +37,6 @@ add_compile_options(
   -Wmissing-format-attribute
   -Wmissing-include-dirs
   -Wmissing-noreturn
-  -Wno-suggest-attribute=noreturn
   -Wno-unused-const-variable
   -Wno-unused-function
   -Wnull-dereference
@@ -75,8 +74,8 @@ add_compile_options(
   -Wwrite-strings)
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   add_compile_options(
-    -Wformat-overflow=2 -Wformat-signedness -Wformat-truncation=1
-    -Wstringop-overflow=4 -Wunsafe-loop-optimizations)
+    -Wno-suggest-attribute=noreturn -Wformat-overflow=2 -Wformat-signedness
+    -Wformat-truncation=1 -Wstringop-overflow=4 -Wunsafe-loop-optimizations)
 endif()
 
 # Allow compilation without glibc
@@ -98,7 +97,10 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
   add_link_options(-e_start -Wl,-no_pie)
 else()
   add_compile_options(-fuse-ld=lld)
-  add_link_options(-fuse-ld=lld -Wl,-entry:start,-debug:none,-nodefaultlib,-fixed,-subsystem:console,-incremental:no)
+  add_link_options(
+    -fuse-ld=lld
+    -Wl,-entry:start,-debug:none,-nodefaultlib,-fixed,-subsystem:console,-incremental:no
+  )
 endif()
 
 add_executable(entrypoint_start entrypoint_start.cpp)
