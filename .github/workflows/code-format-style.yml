@@ -15,5 +15,7 @@ jobs:
       TERM: xterm-256color
     steps:
       - uses: actions/checkout@v2
-      - name: Validate code format
+      - name: Validate C++ code format
         run: clang-format-14 --dry-run -Werror $(find -type f -name "*.?pp")
+      - name: Validate CMake code format
+        run: sudo pip install cmake-format && cmake-format --check .tests/CMakeLists.txt
