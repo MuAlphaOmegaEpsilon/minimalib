@@ -1,5 +1,7 @@
 # minimalib
 
+Warning: this is not for the faint of heart, here we are mixing assembly and C++, proceed at your own risk! :P
+
 | OS      | Compiler  | Result                                                                                                                                                                                      | Check              | Result                                                                                                                                                                                                        |
 | -------:|:---------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Linux   | Clang 14  | [![](https://github.com/MuAlphaOmegaEpsilon/minimalib/actions/workflows/linux-clang.yml/badge.svg)](https://github.com/MuAlphaOmegaEpsilon/minimalib/actions/workflows/linux-clang.yml)     | Clang Format       | [![](https://github.com/MuAlphaOmegaEpsilon/minimalib/actions/workflows/code-format-style.yml/badge.svg)](https://github.com/MuAlphaOmegaEpsilon/minimalib/actions/workflows/code-format-style.yml)           |
