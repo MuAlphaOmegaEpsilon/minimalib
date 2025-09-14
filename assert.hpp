@@ -1,7 +1,7 @@
 #pragma once
 #include "cat.hpp"
-#include "compile_time_minimalib_use_syscalls.hpp"
-#include "compile_time_ndebug.hpp"
+#include "enable_syscalls.hpp"
+#include "ndebug.hpp"
 #include "sys_exit.hpp"
 #include "sys_write.hpp"
 #include <stdint.h>
@@ -14,82 +14,43 @@ extern "C" [[noreturn]] void exit(int) noexcept;
 
 [[maybe_unused]]
 static void assert(bool condition, const char* description, const char* file = __builtin_FILE(), const char* fn_name = __builtin_FUNCTION(), unsigned int line = __builtin_LINE())
-{
-	if constexpr(C_RELEASE)
+{	if constexpr(C_RELEASE)
 		return;
 	if(condition) [[likely]] return;
 	char ebuffer[1024];
 	str_t emsg = cat(&ebuffer, "ASSERT: '", description, "' is false, ", file, ':', fn_name, "():", line);
-	if constexpr(C_MINIMALIB_USE_SYSCALLS)
-	{
-		sys_write(STDERR, emsg);
-		sys_exit(1);
-	}
-	else
-	{
-		fwrite(emsg.view, 1, emsg.length, stderr);
-		exit(1);
-	}
+	C_ENABLE_SYSCALLS ? sys_write(STDERR, emsg) : fwrite(emsg.view, 1, emsg.length, stderr);
+	C_ENABLE_SYSCALLS ? sys_exit(1)             : exit(1);
 }
-
 [[maybe_unused]]
 static void assert(int64_t value, const char* description, const char* file = __builtin_FILE(), const char* fn_name = __builtin_FUNCTION(), unsigned int line = __builtin_LINE())
-{
-	if constexpr(C_RELEASE)
+{	if constexpr(C_RELEASE)
 		return;
 	if(value) [[likely]] return;
 	char ebuffer[1024];
 	str_t emsg = cat(&ebuffer, "ASSERT: '", description, "' is zero, ", file, ':', fn_name, "():", line);
-	if constexpr(C_MINIMALIB_USE_SYSCALLS)
-	{
-		sys_write(STDERR, emsg);
-		sys_exit(1);
-	}
-	else
-	{
-		fwrite(emsg.view, 1, emsg.length, stderr);
-		exit(1);
-	}
+	C_ENABLE_SYSCALLS ? sys_write(STDERR, emsg) : fwrite(emsg.view, 1, emsg.length, stderr);
+	C_ENABLE_SYSCALLS ? sys_exit(1)             : exit(1);
 }
-
 [[maybe_unused]]
 static void assert(uint64_t value, const char* description, const char* file = __builtin_FILE(), const char* fn_name = __builtin_FUNCTION(), unsigned int line = __builtin_LINE())
-{
-	if constexpr(C_RELEASE)
+{	if constexpr(C_RELEASE)
 		return;
 	if(value) [[likely]] return;
 	char ebuffer[1024];
 	str_t emsg = cat(&ebuffer, "ASSERT: '", description, "' is zero, ", file, ':', fn_name, "():", line);
-	if constexpr(C_MINIMALIB_USE_SYSCALLS)
-	{
-		sys_write(STDERR, emsg);
-		sys_exit(1);
-	}
-	else
-	{
-		fwrite(emsg.view, 1, emsg.length, stderr);
-		exit(1);
-	}
+	C_ENABLE_SYSCALLS ? sys_write(STDERR, emsg) : fwrite(emsg.view, 1, emsg.length, stderr);
+	C_ENABLE_SYSCALLS ? sys_exit(1)             : exit(1);
 }
-
 [[maybe_unused]]
 static void assert(void* ptr, const char* description, const char* file = __builtin_FILE(), const char* fn_name = __builtin_FUNCTION(), unsigned int line = __builtin_LINE())
-{
-	if constexpr(C_RELEASE)
+{	if constexpr(C_RELEASE)
 		return;
 	if(ptr) [[likely]] return;
 	char ebuffer[1024];
 	str_t emsg = cat(&ebuffer, "ASSERT: '", description, "' is nullptr, ", file, ':', fn_name, "():", line);
-	if constexpr(C_MINIMALIB_USE_SYSCALLS)
-	{
-		sys_write(STDERR, emsg);
-		sys_exit(1);
-	}
-	else
-	{
-		fwrite(emsg.view, 1, emsg.length, stderr);
-		exit(1);
-	}
+	C_ENABLE_SYSCALLS ? sys_write(STDERR, emsg) : fwrite(emsg.view, 1, emsg.length, stderr);
+	C_ENABLE_SYSCALLS ? sys_exit(1)             : exit(1);
 }
 
 #include "macro_pretty_function.hpp" // IWYU pragma: keep
