@@ -1,4 +1,6 @@
+#pragma once
 #include <vulkan/vulkan.h>
+#include "str.hpp"
 
 #ifdef MINIMALIB_VK_ALLOC
 constexpr static VkAllocationCallbacks* C_VK_ALLOC { MINIMALIB_VK_ALLOC };
@@ -111,72 +113,75 @@ void vkDestroyRenderPass(VkDevice device, VkRenderPass renderPass) noexcept
 {    vkDestroyRenderPass(device, renderPass, C_VK_ALLOC); }
 void vkDestroyCommandPool(VkDevice device, VkCommandPool commandPool) noexcept
 {    vkDestroyCommandPool(device, commandPool, C_VK_ALLOC); }
-}
+} // namespace
 
-constexpr static const char* to_string(VkResult result)
+constexpr static str_t to_string(VkResult result)
 {	switch(result)
 	{
-	case VK_SUCCESS:                                            return "VK_SUCCESS";
-	case VK_NOT_READY:                                          return "VK_NOT_READY";
-	case VK_TIMEOUT:                                            return "VK_TIMEOUT";
-	case VK_EVENT_SET:                                          return "VK_EVENT_SET";
-	case VK_EVENT_RESET:                                        return "VK_EVENT_RESET";
-	case VK_INCOMPLETE:                                         return "VK_INCOMPLETE";
-	case VK_ERROR_OUT_OF_HOST_MEMORY:                           return "VK_ERROR_OUT_OF_HOST_MEMORY";
-	case VK_ERROR_OUT_OF_DEVICE_MEMORY:                         return "VK_ERROR_OUT_OF_DEVICE_MEMORY";
-	case VK_ERROR_INITIALIZATION_FAILED:                        return "VK_ERROR_INITIALIZATION_FAILED";
-	case VK_ERROR_DEVICE_LOST:                                  return "VK_ERROR_DEVICE_LOST";
-	case VK_ERROR_MEMORY_MAP_FAILED:                            return "VK_ERROR_MEMORY_MAP_FAILED";
-	case VK_ERROR_LAYER_NOT_PRESENT:                            return "VK_ERROR_LAYER_NOT_PRESENT";
-	case VK_ERROR_EXTENSION_NOT_PRESENT:                        return "VK_ERROR_EXTENSION_NOT_PRESENT";
-	case VK_ERROR_FEATURE_NOT_PRESENT:                          return "VK_ERROR_FEATURE_NOT_PRESENT";
-	case VK_ERROR_INCOMPATIBLE_DRIVER:                          return "VK_ERROR_INCOMPATIBLE_DRIVER";
-	case VK_ERROR_TOO_MANY_OBJECTS:                             return "VK_ERROR_TOO_MANY_OBJECTS";
-	case VK_ERROR_FORMAT_NOT_SUPPORTED:                         return "VK_ERROR_FORMAT_NOT_SUPPORTED";
-	case VK_ERROR_FRAGMENTED_POOL:                              return "VK_ERROR_FRAGMENTED_POOL";
-	case VK_ERROR_UNKNOWN:                                      return "VK_ERROR_UNKNOWN";
-	case VK_ERROR_OUT_OF_POOL_MEMORY:                           return "VK_ERROR_OUT_OF_POOL_MEMORY";
-	case VK_ERROR_INVALID_EXTERNAL_HANDLE:                      return "VK_ERROR_INVALID_EXTERNAL_HANDLE";
-	case VK_ERROR_FRAGMENTATION:                                return "VK_ERROR_FRAGMENTATION";
-	case VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS:               return "VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS";
-	case VK_PIPELINE_COMPILE_REQUIRED:                          return "VK_PIPELINE_COMPILE_REQUIRED";
-	case VK_ERROR_NOT_PERMITTED:                                return "VK_ERROR_NOT_PERMITTED";
-	case VK_ERROR_SURFACE_LOST_KHR:                             return "VK_ERROR_SURFACE_LOST_KHR";
-	case VK_ERROR_NATIVE_WINDOW_IN_USE_KHR:                     return "VK_ERROR_NATIVE_WINDOW_IN_USE_KHR";
-	case VK_SUBOPTIMAL_KHR:                                     return "VK_SUBOPTIMAL_KHR";
-	case VK_ERROR_OUT_OF_DATE_KHR:                              return "VK_ERROR_OUT_OF_DATE_KHR";
-	case VK_ERROR_INCOMPATIBLE_DISPLAY_KHR:                     return "VK_ERROR_INCOMPATIBLE_DISPLAY_KHR";
-	case VK_ERROR_VALIDATION_FAILED_EXT:                        return "VK_ERROR_VALIDATION_FAILED_EXT";
-	case VK_ERROR_INVALID_SHADER_NV:                            return "VK_ERROR_INVALID_SHADER_NV";
-	case VK_ERROR_IMAGE_USAGE_NOT_SUPPORTED_KHR:                return "VK_ERROR_IMAGE_USAGE_NOT_SUPPORTED_KHR";
-	case VK_ERROR_VIDEO_PICTURE_LAYOUT_NOT_SUPPORTED_KHR:       return "VK_ERROR_VIDEO_PICTURE_LAYOUT_NOT_SUPPORTED_KHR";
-	case VK_ERROR_VIDEO_PROFILE_OPERATION_NOT_SUPPORTED_KHR:    return "VK_ERROR_VIDEO_PROFILE_OPERATION_NOT_SUPPORTED_KHR";
-	case VK_ERROR_VIDEO_PROFILE_FORMAT_NOT_SUPPORTED_KHR:       return "VK_ERROR_VIDEO_PROFILE_FORMAT_NOT_SUPPORTED_KHR";
-	case VK_ERROR_VIDEO_PROFILE_CODEC_NOT_SUPPORTED_KHR:        return "VK_ERROR_VIDEO_PROFILE_CODEC_NOT_SUPPORTED_KHR";
-	case VK_ERROR_VIDEO_STD_VERSION_NOT_SUPPORTED_KHR:          return "VK_ERROR_VIDEO_STD_VERSION_NOT_SUPPORTED_KHR";
-	case VK_ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT: return "VK_ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT";
-	case VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT:          return "VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT";
-	case VK_THREAD_IDLE_KHR:                                    return "VK_THREAD_IDLE_KHR";
-	case VK_THREAD_DONE_KHR:                                    return "VK_THREAD_DONE_KHR";
-	case VK_OPERATION_DEFERRED_KHR:                             return "VK_OPERATION_DEFERRED_KHR";
-	case VK_OPERATION_NOT_DEFERRED_KHR:                         return "VK_OPERATION_NOT_DEFERRED_KHR";
-	case VK_ERROR_INVALID_VIDEO_STD_PARAMETERS_KHR:             return "VK_ERROR_INVALID_VIDEO_STD_PARAMETERS_KHR";
-	case VK_ERROR_COMPRESSION_EXHAUSTED_EXT:                    return "VK_ERROR_COMPRESSION_EXHAUSTED_EXT";
-	case VK_INCOMPATIBLE_SHADER_BINARY_EXT:                     return "VK_INCOMPATIBLE_SHADER_BINARY_EXT";
-	case VK_PIPELINE_BINARY_MISSING_KHR:                        return "VK_PIPELINE_BINARY_MISSING_KHR";
-	case VK_ERROR_NOT_ENOUGH_SPACE_KHR:                         return "VK_ERROR_NOT_ENOUGH_SPACE_KHR";
-	default:                                                    return "UNKNOWN";
+	case VK_SUCCESS:                                            return str("VK_SUCCESS");
+	case VK_NOT_READY:                                          return str("VK_NOT_READY");
+	case VK_TIMEOUT:                                            return str("VK_TIMEOUT");
+	case VK_EVENT_SET:                                          return str("VK_EVENT_SET");
+	case VK_EVENT_RESET:                                        return str("VK_EVENT_RESET");
+	case VK_INCOMPLETE:                                         return str("VK_INCOMPLETE");
+	case VK_ERROR_OUT_OF_HOST_MEMORY:                           return str("VK_ERROR_OUT_OF_HOST_MEMORY");
+	case VK_ERROR_OUT_OF_DEVICE_MEMORY:                         return str("VK_ERROR_OUT_OF_DEVICE_MEMORY");
+	case VK_ERROR_INITIALIZATION_FAILED:                        return str("VK_ERROR_INITIALIZATION_FAILED");
+	case VK_ERROR_DEVICE_LOST:                                  return str("VK_ERROR_DEVICE_LOST");
+	case VK_ERROR_MEMORY_MAP_FAILED:                            return str("VK_ERROR_MEMORY_MAP_FAILED");
+	case VK_ERROR_LAYER_NOT_PRESENT:                            return str("VK_ERROR_LAYER_NOT_PRESENT");
+	case VK_ERROR_EXTENSION_NOT_PRESENT:                        return str("VK_ERROR_EXTENSION_NOT_PRESENT");
+	case VK_ERROR_FEATURE_NOT_PRESENT:                          return str("VK_ERROR_FEATURE_NOT_PRESENT");
+	case VK_ERROR_INCOMPATIBLE_DRIVER:                          return str("VK_ERROR_INCOMPATIBLE_DRIVER");
+	case VK_ERROR_TOO_MANY_OBJECTS:                             return str("VK_ERROR_TOO_MANY_OBJECTS");
+	case VK_ERROR_FORMAT_NOT_SUPPORTED:                         return str("VK_ERROR_FORMAT_NOT_SUPPORTED");
+	case VK_ERROR_FRAGMENTED_POOL:                              return str("VK_ERROR_FRAGMENTED_POOL");
+	case VK_ERROR_UNKNOWN:                                      return str("VK_ERROR_UNKNOWN");
+	case VK_ERROR_OUT_OF_POOL_MEMORY:                           return str("VK_ERROR_OUT_OF_POOL_MEMORY");
+	case VK_ERROR_INVALID_EXTERNAL_HANDLE:                      return str("VK_ERROR_INVALID_EXTERNAL_HANDLE");
+	case VK_ERROR_FRAGMENTATION:                                return str("VK_ERROR_FRAGMENTATION");
+	case VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS:               return str("VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS");
+	case VK_PIPELINE_COMPILE_REQUIRED:                          return str("VK_PIPELINE_COMPILE_REQUIRED");
+	case VK_ERROR_NOT_PERMITTED:                                return str("VK_ERROR_NOT_PERMITTED");
+	case VK_ERROR_SURFACE_LOST_KHR:                             return str("VK_ERROR_SURFACE_LOST_KHR");
+	case VK_ERROR_NATIVE_WINDOW_IN_USE_KHR:                     return str("VK_ERROR_NATIVE_WINDOW_IN_USE_KHR");
+	case VK_SUBOPTIMAL_KHR:                                     return str("VK_SUBOPTIMAL_KHR");
+	case VK_ERROR_OUT_OF_DATE_KHR:                              return str("VK_ERROR_OUT_OF_DATE_KHR");
+	case VK_ERROR_INCOMPATIBLE_DISPLAY_KHR:                     return str("VK_ERROR_INCOMPATIBLE_DISPLAY_KHR");
+	case VK_ERROR_VALIDATION_FAILED_EXT:                        return str("VK_ERROR_VALIDATION_FAILED_EXT");
+	case VK_ERROR_INVALID_SHADER_NV:                            return str("VK_ERROR_INVALID_SHADER_NV");
+	case VK_ERROR_IMAGE_USAGE_NOT_SUPPORTED_KHR:                return str("VK_ERROR_IMAGE_USAGE_NOT_SUPPORTED_KHR");
+	case VK_ERROR_VIDEO_PICTURE_LAYOUT_NOT_SUPPORTED_KHR:       return str("VK_ERROR_VIDEO_PICTURE_LAYOUT_NOT_SUPPORTED_KHR");
+	case VK_ERROR_VIDEO_PROFILE_OPERATION_NOT_SUPPORTED_KHR:    return str("VK_ERROR_VIDEO_PROFILE_OPERATION_NOT_SUPPORTED_KHR");
+	case VK_ERROR_VIDEO_PROFILE_FORMAT_NOT_SUPPORTED_KHR:       return str("VK_ERROR_VIDEO_PROFILE_FORMAT_NOT_SUPPORTED_KHR");
+	case VK_ERROR_VIDEO_PROFILE_CODEC_NOT_SUPPORTED_KHR:        return str("VK_ERROR_VIDEO_PROFILE_CODEC_NOT_SUPPORTED_KHR");
+	case VK_ERROR_VIDEO_STD_VERSION_NOT_SUPPORTED_KHR:          return str("VK_ERROR_VIDEO_STD_VERSION_NOT_SUPPORTED_KHR");
+	case VK_ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT: return str("VK_ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT");
+	case VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT:          return str("VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT");
+	case VK_THREAD_IDLE_KHR:                                    return str("VK_THREAD_IDLE_KHR");
+	case VK_THREAD_DONE_KHR:                                    return str("VK_THREAD_DONE_KHR");
+	case VK_OPERATION_DEFERRED_KHR:                             return str("VK_OPERATION_DEFERRED_KHR");
+	case VK_OPERATION_NOT_DEFERRED_KHR:                         return str("VK_OPERATION_NOT_DEFERRED_KHR");
+	case VK_ERROR_INVALID_VIDEO_STD_PARAMETERS_KHR:             return str("VK_ERROR_INVALID_VIDEO_STD_PARAMETERS_KHR");
+	case VK_ERROR_COMPRESSION_EXHAUSTED_EXT:                    return str("VK_ERROR_COMPRESSION_EXHAUSTED_EXT");
+	case VK_INCOMPATIBLE_SHADER_BINARY_EXT:                     return str("VK_INCOMPATIBLE_SHADER_BINARY_EXT");
+	case VK_PIPELINE_BINARY_MISSING_KHR:                        return str("VK_PIPELINE_BINARY_MISSING_KHR");
+	case VK_ERROR_NOT_ENOUGH_SPACE_KHR:                         return str("VK_ERROR_NOT_ENOUGH_SPACE_KHR");
+	default:                                                    return str("UNKNOWN");
 	}
 }
-constexpr const char* to_string(VkPhysicalDeviceType type)
+constexpr static str_t to_string(VkPhysicalDeviceType type)
 {	switch(type)
 	{
-	case VK_PHYSICAL_DEVICE_TYPE_OTHER:          return "OTHER";
-	case VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU: return "INTEGRATED GPU";
-	case VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU:   return "DISCRETE GPU";
-	case VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU:    return "VIRTUAL GPU";
-	case VK_PHYSICAL_DEVICE_TYPE_CPU:            return "CPU";
-	default:                                     return "UNKNOWN";
+	case VK_PHYSICAL_DEVICE_TYPE_OTHER:          return str("OTHER");
+	case VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU: return str("INTEGRATED GPU");
+	case VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU:   return str("DISCRETE GPU");
+	case VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU:    return str("VIRTUAL GPU");
+	case VK_PHYSICAL_DEVICE_TYPE_CPU:            return str("CPU");
+	default:                                     return str("UNKNOWN");
 	}
 }
+
+// Copyright (C) 2024 Tommaso Bonvicini <tommasobonvicini@gmail.com>
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
